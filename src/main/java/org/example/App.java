@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -33,7 +34,7 @@ public class App {
                     MinMaxAverage(prices);
                     break;
                 case "3":
-                    System.out.println(" ");
+                    Sortera(prices);
                     break;
                 case "4":
                     System.out.println(" ");
@@ -49,19 +50,51 @@ public class App {
         }
         while (true);
     }
+
     public static void inputPrice( int[] prices, Scanner scanner ) {
         System.out.println("Ange elpriser för dygnet (öre per kW/h): ");
 
-        for (int hour = 0; hour < prices.length; hour++) {
+        for (int hour = 0; hour < 24; hour++) {
             System.out.print((hour) + "-" + (hour + 1) + ": ");
             prices[hour] = scanner.nextInt();
         }
         System.out.println("Tack för de inmatade elpriserna");
     }
+
     public static void MinMaxAverage(int[] prices) {
-        int min = Integer.MIN_VALUE;
-        int max = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int minHour = -1;
+        int maxHour = -1;
+        int sum = 0;
 
+        for (int hour = 0; hour < 24; hour++) {
+            int price = prices[hour];
+            if (price < min) {
+                min = price;
+                minHour = hour;
+            }
 
+            if (price > max) {
+                max = price;
+                maxHour = hour;
+            }
+            sum += price;
+        }
+
+        float average = (float) sum / prices.length;
+
+        System.out.printf("Lägsta pris: %02d-%02d, %d öre/kWh\n", minHour, minHour + 1, min);
+        System.out.printf("Högsta pris: %02d-%02d, %d öre/kWh\n", maxHour, maxHour + 1, max);
+        System.out.printf("Medelpris: %.2f öre/kWh\n", average);
+    }
+
+    public static void Sortera(int[] prices) {
+        int[] sortedPrices = Arrays.copyOf(prices, 24);
+        Arrays.sort(sortedPrices);
+
+        int hour;
+        for (hour = 0; hour < 24; hour++) ;
+        System.out.println(String.format("%02d-%02d %d öre", hour, hour + 1, sortedPrices[hour]));
     }
 }
