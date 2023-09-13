@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -39,7 +38,6 @@ public class App {
         }
         while (true);
     }
-
     public static void inputPrice( int[] prices, Scanner scanner ) {
         System.out.println("Ange elpriser för dygnet (öre per kW/h): ");
 
@@ -50,7 +48,6 @@ public class App {
         }
         System.out.println("Tack för de inmatade elpriserna");
     }
-
     public static void MinMaxAverage(int[] prices) {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
@@ -71,14 +68,12 @@ public class App {
             }
             sum += price;
         }
-
         float average = (float) sum / prices.length;
 
         System.out.printf("Lägsta pris: %02d-%02d, %d öre/kWh\n", minHour, minHour + 1, min);
         System.out.printf("Högsta pris: %02d-%02d, %d öre/kWh\n", maxHour, maxHour + 1, max);
         System.out.printf("Medelpris: %.2f öre/kWh\n", average);
     }
-
     public static void Sort(int[] prices) {
         int[] sortedPrices = Arrays.copyOf(prices, 24);
         Arrays.sort(sortedPrices);
@@ -102,10 +97,9 @@ public class App {
                 bestStartTime = startTime;
             }
         }
-
         float averageValue = (float) lowestPrice / 4;
 
-        System.out.println(String.format("Påbörja laddningen klockan: %02d", bestStartTime, + 3));
-        System.out.println(String.format("Medelpris 4h: %.1f öre/kWh",averageValue));
+        System.out.printf("Påbörja laddningen klockan: %02d%n", bestStartTime, + 3);
+        System.out.printf("Medelpris 4h: %.1f öre/kWh%n", averageValue);
     }
 }
