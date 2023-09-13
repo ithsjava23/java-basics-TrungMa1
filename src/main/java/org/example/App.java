@@ -11,18 +11,18 @@ public class App {
         Locale swedishLocale = new Locale("sv", "SE");
         Locale.setDefault(swedishLocale);
         int[] prices = new int[24];
+        String choice ="";
 
         do {
-            System.out.println("\nElpriser");
-            System.out.println("========");
-            System.out.println("1. Inmatning");
-            System.out.println("2. Min, Max och Medel");
-            System.out.println("3. Sortera");
-            System.out.println("4. Bästa Laddningstid (4h)");
-            System.out.println("e. Avsluta");
-            System.out.println("Välj ett av alternativen: ");
+            System.out.print("\nElpriser\n");
+            System.out.print("========\n");
+            System.out.print("1. Inmatning\n");
+            System.out.print("2. Min, Max och Medel\n");
+            System.out.print("3. Sortera\n");
+            System.out.print("4. Bästa Laddningstid (4h)\n");
+            System.out.print("e. Avsluta\n");
 
-            String choice = scanner.nextLine();
+            choice = scanner.nextLine();
             choice = choice.toLowerCase();
 
             switch (choice) {
@@ -30,23 +30,21 @@ public class App {
                 case "2" -> MinMaxAverage(prices);
                 case "3" -> Sort(prices);
                 case "4" -> BestChargingTime(prices);
-                case "e" -> { System.out.println("Programmet avslutas");
-                    scanner.close();
-                    System.exit(0); }
-                default -> System.out.println("Alternativet " + choice + " finns inte i menyn");
+                case "e" -> System.out.print("Programmet avslutas\n");
+                default -> System.out.printf("Alternativet " + choice + " finns inte i menyn\n");
             }
         }
-        while (true);
+        while (!choice.equals("e"));
     }
     public static void inputPrice( int[] prices, Scanner scanner ) {
-        System.out.println("Ange elpriser för dygnet (öre per kW/h): ");
+        System.out.print("Ange elpriser för dygnet (öre per kW/h): \n");
 
         for (int hour = 0; hour < 24; hour++) {
             System.out.print((hour) + "-" + (hour + 1) + ": ");
             prices[hour] = scanner.nextInt();
             scanner.nextLine();
         }
-        System.out.println("Tack för de inmatade elpriserna");
+        System.out.print("Tack för de inmatade elpriserna\n");
     }
     public static void MinMaxAverage(int[] prices) {
         int min = Integer.MAX_VALUE;
@@ -79,8 +77,8 @@ public class App {
         Arrays.sort(sortedPrices);
 
         int hour;
-        for (hour = 0; hour < 24; hour++) {
-            System.out.printf("%02d-%02d %d öre%n", hour, hour + 1, sortedPrices[hour]);
+        for (hour = 23; hour > 0; hour--) {
+            System.out.printf("%02d-%02d %d öre\n", hour, hour + 1, sortedPrices[hour]);
         }
     }
     public static void BestChargingTime(int[] prices) {
@@ -99,7 +97,7 @@ public class App {
         }
         float averageValue = (float) lowestPrice / 4;
 
-        System.out.printf("Påbörja laddningen klockan: %02d%n", bestStartTime, + 3);
-        System.out.printf("Medelpris 4h: %.1f öre/kWh%n", averageValue);
+        System.out.printf("Påbörja laddning klockan %02d\n", bestStartTime, + 3);
+        System.out.printf("Medelpris 4h: %.1f öre/kWh\n", averageValue);
     }
 }
