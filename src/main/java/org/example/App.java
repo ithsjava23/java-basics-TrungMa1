@@ -27,25 +27,14 @@ public class App {
             choice = choice.toLowerCase();
 
             switch (choice) {
-                case "1":
-                    inputPrice(prices, scanner);
-                    break;
-                case "2":
-                    MinMaxAverage(prices);
-                    break;
-                case "3":
-                    Sortera(prices);
-                    break;
-                case "4":
-                    System.out.println(" ");
-                    break;
-                case "e":
-                    System.out.println("Programmet avslutas");
+                case "1" -> inputPrice(prices, scanner);
+                case "2" -> MinMaxAverage(prices);
+                case "3" -> Sort(prices);
+                case "4" -> BestChargingTime(prices);
+                case "e" -> { System.out.println("Programmet avslutas");
                     scanner.close();
-                    System.exit(0);
-                default:
-                    System.out.println("Alternativet " + choice + " finns inte i menyn");
-                    break;
+                    System.exit(0); }
+                default -> System.out.println("Alternativet " + choice + " finns inte i menyn");
             }
         }
         while (true);
@@ -57,6 +46,7 @@ public class App {
         for (int hour = 0; hour < 24; hour++) {
             System.out.print((hour) + "-" + (hour + 1) + ": ");
             prices[hour] = scanner.nextInt();
+            scanner.nextLine();
         }
         System.out.println("Tack för de inmatade elpriserna");
     }
@@ -89,12 +79,33 @@ public class App {
         System.out.printf("Medelpris: %.2f öre/kWh\n", average);
     }
 
-    public static void Sortera(int[] prices) {
+    public static void Sort(int[] prices) {
         int[] sortedPrices = Arrays.copyOf(prices, 24);
         Arrays.sort(sortedPrices);
 
         int hour;
-        for (hour = 0; hour < 24; hour++) ;
-        System.out.println(String.format("%02d-%02d %d öre", hour, hour + 1, sortedPrices[hour]));
+        for (hour = 0; hour < 24; hour++) {
+            System.out.printf("%02d-%02d %d öre%n", hour, hour + 1, sortedPrices[hour]);
+        }
+    }
+    public static void BestChargingTime(int[] prices) {
+        int lowestPrice = Integer.MAX_VALUE;
+        int bestStartTime = -1;
+
+        for (int startTime = 0; startTime < 21; startTime++) {
+            int totalPrice = 0;
+            for (int i = startTime; i < startTime + 4; i++) {
+                totalPrice += prices[i];
+            }
+            if (totalPrice < lowestPrice) {
+                lowestPrice = totalPrice;
+                bestStartTime = startTime;
+            }
+        }
+
+        float averageValue = (float) lowestPrice / 4;
+
+        System.out.println(String.format("Påbörja laddningen klockan: %02d", bestStartTime, + 3));
+        System.out.println(String.format("Medelpris 4h: %.1f öre/kWh",averageValue));
     }
 }
