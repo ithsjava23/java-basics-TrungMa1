@@ -10,7 +10,7 @@ public class App {
         Locale swedishLocale = new Locale("sv", "SE");
         Locale.setDefault(swedishLocale);
         int[] prices = new int[24];
-        String choice = "";
+        String choice ="";
 
         do {
             System.out.print("\nElpriser\n");
