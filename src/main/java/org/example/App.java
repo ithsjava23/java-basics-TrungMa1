@@ -1,6 +1,5 @@
 package org.example;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -11,7 +10,7 @@ public class App {
         Locale swedishLocale = new Locale("sv", "SE");
         Locale.setDefault(swedishLocale);
         int[] prices = new int[24];
-        String choice ="";
+        String choice = "";
 
         do {
             System.out.print("\nElpriser\n");
@@ -36,7 +35,8 @@ public class App {
         }
         while (!choice.equals("e"));
     }
-    public static void inputPrice( int[] prices, Scanner scanner ) {
+
+    public static void inputPrice(int[] prices, Scanner scanner) {
         System.out.print("Ange elpriser för dygnet (öre per kW/h): \n");
 
         for (int hour = 0; hour < 24; hour++) {
@@ -46,6 +46,7 @@ public class App {
         }
         System.out.print("Tack för de inmatade elpriserna\n");
     }
+
     public static void MinMaxAverage(int[] prices) {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
@@ -72,15 +73,7 @@ public class App {
         System.out.printf("Högsta pris: %02d-%02d, %d öre/kWh\n", maxHour, maxHour + 1, max);
         System.out.printf("Medelpris: %.2f öre/kWh\n", average);
     }
-    public static void Sort(int[] prices) {
-        int[] sortedPrices = Arrays.copyOf(prices, 24);
-        Arrays.sort(sortedPrices);
 
-        int hour;
-        for (hour = 23; hour > 0; hour--) {
-            System.out.printf("%02d-%02d %d öre\n", hour, hour + 1, sortedPrices[hour]);
-        }
-    }
     public static void BestChargingTime(int[] prices) {
         int lowestPrice = Integer.MAX_VALUE;
         int bestStartTime = -1;
@@ -97,7 +90,36 @@ public class App {
         }
         float averageValue = (float) lowestPrice / 4;
 
-        System.out.printf("Påbörja laddning klockan %02d\n", bestStartTime, + 3);
+        System.out.printf("Påbörja laddning klockan %02d\n", bestStartTime, +3);
         System.out.printf("Medelpris 4h: %.1f öre/kWh\n", averageValue);
+    }
+
+    public static void Sort(int[] prices) {
+        int[] hours = new int[24];
+        for (int i = 0; i < 24; i++) {
+            hours[i] = i;
+        }
+        boolean sorted = false;
+
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < 23; i++) {
+                if (prices[i] < prices[i + 1]) {
+
+                    int tempPrice = prices[i];
+                    prices[i] = prices[i + 1];
+                    prices[i + 1] = tempPrice;
+
+                    int tempHour = hours[i];
+                    hours[i] = hours[i + 1];
+                    hours[i + 1] = tempHour;
+
+                    sorted = false;
+                }
+            }
+        }
+        for (int i = 0; i < 24; i++) {
+            System.out.printf("%02d-%02d %d öre\n", hours[i], hours[i] + 1, prices[i]);
+        }
     }
 }
