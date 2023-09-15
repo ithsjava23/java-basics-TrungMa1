@@ -32,8 +32,7 @@ public class App {
                 case "e" -> System.out.print("Programmet avslutas\n");
                 default -> System.out.printf("Alternativet " + choice + " finns inte i menyn\n");
             }
-        }
-        while (!choice.equals("e"));
+        } while (!choice.equals("e"));
     }
 
     public static void inputPrice(int[] prices, Scanner scanner) {
