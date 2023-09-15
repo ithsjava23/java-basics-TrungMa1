@@ -25,18 +25,17 @@ public class App {
             choice = choice.toLowerCase();
 
             switch (choice) {
-                case "1" -> inputPrice(prices, scanner);
+                case "1" -> input(prices, scanner);
                 case "2" -> MinMaxAverage(prices);
                 case "3" -> Sort(prices);
                 case "4" -> BestChargingTime(prices);
                 case "e" -> System.out.print("Programmet avslutas\n");
                 default -> System.out.printf("Alternativet " + choice + " finns inte i menyn\n");
             }
-        }
-        while (!choice.equals("e"));
+        } while (!choice.equals("e"));
     }
 
-    public static void inputPrice(int[] prices, Scanner scanner) {
+    public static void input(int[] prices, Scanner scanner) {
         System.out.print("Ange elpriser för dygnet (öre per kW/h): \n");
 
         for (int hour = 0; hour < 24; hour++) {
